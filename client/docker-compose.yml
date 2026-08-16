@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  vitalsync-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: vitalsync-backend
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - MONGO_URI=${MONGO_URI}
+      - FIREBASE_PROJECT_ID=${FIREBASE_PROJECT_ID}
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spy http://localhost:5000/vitals || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3

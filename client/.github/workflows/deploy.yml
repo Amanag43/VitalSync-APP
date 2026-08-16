@@ -1,0 +1,54 @@
+name: VitalSync Full CI/CD Deployment Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+
+jobs:
+  # STAGE 1: Automated Unit & Integration Tests
+  test-suite:
+    name: 🧪 Run Automated Test Suite
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci || npm install
+
+      - name: Run Jest Test Suite
+        run: npm test
+        env:
+          MONGO_URI: ${{ secrets.MONGO_URI || 'mongodb+srv://Aman_Agarwal18:xmZqgdnlLLwqU3ai@cluster-vitalsync.r0hfkwh.mongodb.net/?appName=Cluster-VitalSync' }}
+          FIREBASE_PROJECT_ID: 'vitalsync-75922'
+          PORT: 5000
+
+  # STAGE 2: Render Continuous Deployment Trigger
+  deploy-render:
+    name: 🚀 Deploy to Render Cloud
+    needs: test-suite
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+
+    steps:
+      - name: Trigger Render Deploy Hook (Optional Webhook)
+        run: |
+          if [ -n "${{ secrets.RENDER_DEPLOY_HOOK_URL }}" ]; then
+            echo "Triggering Render Auto-Deploy..."
+            curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK_URL }}"
+          else
+            echo "Render GitHub Integration handles deployment on push to main."
+          fi

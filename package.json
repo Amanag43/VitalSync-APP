@@ -1,0 +1,14 @@
+{
+  "name": "VitalSync-App",
+  "version": "1.0.0",
+  "description": "VitalSync IoT Telemetry App & AI Backend",
+  "scripts": {
+    "dev:server": "cd server && npm run dev",
+    "dev:client": "cd client && npx expo start",
+    "dev": "npx concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "test": "cd server && npm test"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
