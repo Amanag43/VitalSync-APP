@@ -29,7 +29,7 @@
       "package": "com.amanag.VitalSync",
       "config": {
         "googleMaps": {
-          "apiKey": "AIzaSyACZ3MoN5CmRDKScjTFW-F10Zg53-1nE40"
+          "apiKey": ""
         }
       }
     },
