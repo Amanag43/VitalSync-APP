@@ -1,158 +1,271 @@
 <div align="center">
 
-  # 🫀 VitalSync Telemetry & AI Diagnostic Engine
+# 🩺 VitalSync
 
-  **Production-Grade IoT Patient Telemetry, AI Health Assistant & Real-Time Emergency Response System**
+### Real-Time Health Monitoring & Intelligent Emergency Response Platform
 
-  [![AWS EC2](https://img.shields.io/badge/AWS_EC2-24%2F7_Active-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white)](http://65.0.105.12:5000/health)
-  [![Node.js](https://img.shields.io/badge/Node.js-v20.x-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org)
-  [![MongoDB Atlas](https://img.shields.io/badge/MongoDB-Atlas_Cloud-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://mongodb.com)
-  [![React Native](https://img.shields.io/badge/React_Native-Expo_SDK_52-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://reactnative.dev)
-  [![Jest](https://img.shields.io/badge/Jest-100%25_Pass-C21325?style=for-the-badge&logo=jest&logoColor=white)](https://jestjs.io)
-  [![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
+Monitor vital signs in real time using Android Health Connect and automatically initiate emergency workflows when abnormal health conditions are detected.
 
-  <br />
-
-  [📥 Download Android APK (v1.0.0)](https://github.com/Amanag43/vitalsync-backend/releases/latest) • [🌐 Live Server Status](http://65.0.105.12:5000/health) • [📖 API Reference](#-api-endpoints-reference)
+![React Native](https://img.shields.io/badge/React%20Native-0.79-blue?style=for-the-badge&logo=react)
+![Node.js](https://img.shields.io/badge/Node.js-Express-green?style=for-the-badge&logo=node.js)
+![MongoDB](https://img.shields.io/badge/MongoDB-Database-success?style=for-the-badge&logo=mongodb)
+![Firebase](https://img.shields.io/badge/Firebase-Authentication-orange?style=for-the-badge&logo=firebase)
+![Health Connect](https://img.shields.io/badge/Android-Health%20Connect-brightgreen?style=for-the-badge)
 
 </div>
 
 ---
 
-## 🌟 Key Features
+# 📖 Overview
 
-VitalSync is an enterprise-grade IoT health monitoring ecosystem built for real-time patient telemetry, automated clinical risk scoring, and instant emergency dispatch.
+VitalSync is a full-stack healthcare application built with **React Native**, **Node.js**, **Express**, and **MongoDB** that continuously monitors health metrics using **Android Health Connect**.
 
-### 🩺 1. Real-Time Telemetry & Multi-Sensor Integration
-- **5 Core Vitals Ingestion**: Continuous sensor data streaming for **Heart Rate** (bpm), **Blood Oxygen / SpO₂** (%), **Body Temperature** (°C), **Respiratory Rate** (breaths/min), and cumulative daily **Steps**.
-- **Android Health Connect Sync**: Direct native hook to Android Health Connect Toolbox with 24-hour lookback freshness windows.
-- **Sparkline Visual Analytics**: Interactive 5-vital trend graphs with **Daily**, **Weekly**, **Monthly**, and **Yearly** resolution filters.
+The application automatically evaluates incoming health data, detects abnormal conditions using configurable thresholds, and launches emergency workflows including hospital navigation and SOS notifications.
 
-### 🤖 2. AI Health Assistant Diagnostic Engine (`/api/ai/insights/:userId`)
-- **7-Day Telemetry Diagnostic**: Computes rolling 7-day average metrics across all vital parameters.
-- **Dynamic Stability Scoring**: Algorithmic health stability index ($0 - 100$) reflecting cardiovascular & respiratory balance.
-- **Clinical Tips Generator**: Automated contextual recommendations based on anomalous vitals.
-
-### 🚨 3. Automated Emergency SOS Dispatch & Debouncing
-- **Threshold Detection**: Instant identification of warning (< 15% deviation) and critical (< 30% deviation) vital breaches.
-- **Single-Alert Cooldown Lock**: 15-minute backend alert debouncing engine to prevent duplicate database spam while vitals remain abnormal.
-- **Native Emergency SOS**: Automated 5-second countdown with native pre-filled SMS dispatch (location link, patient name, severity, exact vitals) to saved emergency contacts.
+The goal of the project is to demonstrate how mobile health technologies, real-time communication, and location-based services can be combined into a scalable healthcare platform.
 
 ---
 
-## 🏗️ System Architecture
+# ✨ Features
 
-```mermaid
-graph TD
-    subgraph Client Layer
-        A["📱 VitalSync Android App (Expo / React Native)"]
-        HC["🩺 Android Health Connect Sensors"] --> A
-    end
+## 🩺 Real-Time Health Monitoring
 
-    subgraph Transport & Security
-        A <-->|WSS WebSockets 24/7| B["⚡ AWS EC2 Server (65.0.105.12:5000)"]
-        A <-->|HTTPS REST API| B
-    end
+- Android Health Connect integration
+- Heart Rate monitoring
+- Blood Oxygen (SpO₂)
+- Body Temperature
+- Respiratory Rate
+- Daily Step Tracking
+- Live Dashboard
+- Historical Vital Storage
 
-    subgraph Backend Services
-        B --> C["🚨 Emergency & Threshold Engine"]
-        B --> D["🤖 AI Diagnostic Health Assistant"]
-        B --> E["🔐 Token & Auth Middleware"]
-    end
+---
 
-    subgraph Data & Cloud Layer
-        C --> F["🍃 MongoDB Atlas Cloud Database"]
-        D --> F
-    end
+## 🚨 Emergency Detection
+
+VitalSync continuously evaluates incoming health records.
+
+When abnormal readings are detected, the system:
+
+- Detects Warning & Critical conditions
+- Starts emergency countdown
+- Prevents duplicate incidents
+- Locks repeated alerts
+- Initiates emergency workflow
+
+---
+
+## 📍 Hospital Navigation
+
+Integrated with:
+
+- OpenStreetMap
+- Overpass API
+- OSRM Routing API
+
+Capabilities:
+
+- Discover nearby hospitals
+- Display hospital markers
+- Generate driving routes
+- Turn-by-turn navigation
+- Nearest hospital selection
+
+---
+
+## 📩 Emergency SOS
+
+- Emergency Contact Management
+- SOS Alert Generation
+- Live Location Sharing
+- GPS Coordinates
+- Automatic Emergency Workflow
+
+---
+
+## 📊 Health Dashboard
+
+- Live Vitals
+- Sync Status
+- Connection Status
+- Health Status
+- Health Trends
+- Real-Time Updates
+
+---
+
+## 🔐 Authentication
+
+- Firebase Authentication
+- Secure Login
+- User Management
+- Protected Routes
+
+---
+
+# 🏗 Architecture
+
+```
+                Android Health Connect
+                         │
+                         ▼
+                 Health Polling Engine
+                         │
+                         ▼
+                  Threshold Evaluation
+                         │
+            ┌────────────┴────────────┐
+            ▼                         ▼
+      Dashboard Update        Emergency Trigger
+            │                         │
+            ▼                         ▼
+      WebSocket Updates      Hospital Navigation
+            │                         │
+            └────────────┬────────────┘
+                         ▼
+                 Node.js / Express API
+                         │
+                         ▼
+                      MongoDB
 ```
 
 ---
 
-## ⚡ Tech Stack
+# 🛠 Tech Stack
 
-| Component | Technology | Description |
-| :--- | :--- | :--- |
-| **Mobile App** | React Native, Expo SDK 52, Expo Router | Cross-platform mobile client with glassmorphism UI |
-| **Backend Server** | Node.js, Express.js, PM2 | High-concurrency RESTful API & WebSockets server |
-| **Database** | MongoDB Atlas Cloud | Scalable NoSQL telemetry & alert storage |
-| **Real-Time Stream**| `ws` (WebSocket Protocol) | 24/7 bidirectional real-time telemetry streaming |
-| **Hosting & Cloud** | AWS EC2 (Ubuntu 24.04 LTS) | 24/7 unthrottled instance with 100% uptime |
-| **Testing & CI/CD** | Jest, Supertest, GitHub Actions | Automated unit/integration test suite |
+## Mobile
 
----
+- React Native
+- Expo
+- Expo Router
+- Zustand
+- Health Connect
+- Expo Location
+- Expo SMS
 
-## 📡 API Endpoints Reference
+## Backend
 
-### 🟢 System Health
-`GET /health` — Live server status, timestamp & uptime verification.
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- WebSocket
 
-### 💓 Telemetry Vitals
-`POST /vitals` — Ingest local sensor telemetry payload.  
-`GET /vitals/:userId` — Fetch latest recorded vitals snapshot for a patient.  
-`GET /vitals/history/:userId` — Fetch historical telemetry entries (supports `?limit=50`).
+## Authentication
 
-### 🤖 AI Diagnostic Health Assistant
-`GET /api/ai/insights/:userId` — Generates 7-day stability score, metric averages, and clinical summary.
+- Firebase Authentication
 
-### 🚨 Alerts & Emergency
-`GET /alerts/:userId` — Query active & historical emergency alert documents.  
-`POST /alerts` — Manually log alert document with 15-minute cooldown check.  
-`POST /emergency-contacts/:userId` — Save emergency contact details.
+## Maps & Navigation
 
----
-
-## 🧪 Testing Suite & Quality Assurance
-
-Automated unit & integration test suite powered by **Jest** and **Supertest**:
-
-```bash
-# Run local automated test suite
-npm test
-```
-
-```text
-PASS tests/api.test.js
-  VitalSync Telemetry & AI API Suite
-    Threshold & Vital Validation Tests
-      ✓ POST /vitals with valid readings returns success
-      ✓ POST /vitals with abnormal respiratory rate identifies threshold breach
-    Alert History Query Tests
-      ✓ GET /alerts/:userId returns alerts array structure
-    AI Diagnostic Health Assistant Tests
-      ✓ GET /api/ai/insights/:userId returns clinical metrics & score
-```
+- OpenStreetMap
+- Overpass API
+- OSRM Routing API
 
 ---
 
-## 🚀 Deployment Instructions
+# 📱 Screens
 
-### Local Development Setup
-```bash
-# Clone the repository
-git clone https://github.com/Amanag43/vitalsync-backend.git
-cd vitalsync-backend
+- Login
+- Dashboard
+- Live Health Status
+- Health Trends
+- Emergency Overlay
+- Nearby Hospitals Map
+- Emergency Contacts
+- Edit Profile
+- Settings
 
-# Install dependencies
-npm install
+---
 
-# Start local dev server
-npm run dev
+# 📡 Backend APIs
+
+## Authentication
+
+```
+POST /login
+POST /signup
 ```
 
-### Production Deployment on AWS EC2
-```bash
-# Install Node.js 20 & PM2
-curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
-sudo apt install -y nodejs git
-sudo npm install -g pm2
+## Vitals
 
-# Start server 24/7
-pm2 start server.js --name "vitalsync-backend"
-pm2 save
+```
+POST /vitals
+GET /history/:userId
+```
+
+## Emergency Contacts
+
+```
+GET /emergency-contacts/:userId
+POST /emergency-contacts/:userId
+DELETE /emergency-contacts/:userId/:contactId
 ```
 
 ---
 
-## 📄 License & Author
+# 📂 Project Structure
 
-Developed by **Aman Agarwal**. Licensed under the [MIT License](LICENSE).
+```
+VitalSync
+
+frontend/
+│
+├── app/
+├── components/
+├── services/
+├── store/
+├── engine/
+├── theme/
+└── utils/
+
+backend/
+│
+├── controllers/
+├── models/
+├── routes/
+├── websocket.js
+├── server.js
+└── config/
+```
+
+---
+
+# 🚀 Future Roadmap
+
+- AI-assisted health insights
+- Medication reminders
+- PDF health reports
+- Caregiver dashboard
+- Doctor portal
+- Push notifications
+- Wear OS support
+- Cloud backup
+- Advanced health analytics
+
+---
+
+# 🎯 Learning Outcomes
+
+This project provided practical experience with:
+
+- Full-stack Mobile Development
+- REST API Development
+- WebSocket Communication
+- MongoDB Data Modeling
+- Health Connect Integration
+- React Native Architecture
+- State Management
+- Geolocation APIs
+- Emergency Workflow Design
+
+---
+
+# 👨‍💻 Author
+
+**Aman Agarwal**
+
+GitHub: https://github.com/Amanag43
+
+---
+
+⭐ If you found this project interesting, consider starring the repository.
